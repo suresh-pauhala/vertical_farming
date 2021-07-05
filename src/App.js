@@ -1,23 +1,32 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-
+import Axios from 'axios';
 function App() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const submit = () => {
+    Axios.post("http://localhost:3001/api/register", {
+      email : email,
+      password: password
+    }).then(() => {
+      alert("registered");
+    });
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div class="form">
+        <label>Email: </label>
+        <input type="text" name="email" onChange={(e)=> {
+          setEmail(e.target.value)
+        }}/>
+        <label>Password: </label>
+        <input type="text" name="password" onChange={(e)=> {
+          setPassword(e.target.value)
+        }} />
+        <button onClick={submit}>Submit</button>
+      </div>
     </div>
   );
 }
